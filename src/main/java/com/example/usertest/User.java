@@ -1,11 +1,11 @@
 package com.example.usertest;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
-public class User {
-    private String login;
-    private String email;
+public record User(String login, String email) {
 }
+
