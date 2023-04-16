@@ -1,14 +1,13 @@
 package com.example.usertest;
-
-import org.apache.commons.validator.routines.EmailValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Objects;
-
-
 class UserTest {
-    User user = new User("Roman", "roman@mail.ru");
+
+    User user = new User(login, email);
+
+    public static String login = "Roman";
+    public static String email = "roman@mail.ru";
     public static final String EMAIL_MESSAGE = "Email введен корректно";
     public static final String EMAIL_LOGIN_NOT_EQUALS = "Логин и email не совпадают";
 
@@ -31,15 +30,16 @@ class UserTest {
 
     @Test
     void emailTest() {
-        RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, user::checkEmail, EMAIL_MESSAGE);
+        email = "@default.mail";
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> new User(login, email), EMAIL_MESSAGE);
         Assertions.assertEquals(EMAIL_MESSAGE, thrown.getMessage());
     }
 
-
     @Test
     void equalsLoginEmail() {
-   //     User user = new User("roman@mail.ru", "roman@mail.ru");
-        RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, user::equalsLoginEmail, EMAIL_LOGIN_NOT_EQUALS);
+        login = "default@mail.ru";
+        email = "default@mail.ru";
+        RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () -> new User(login, email), EMAIL_LOGIN_NOT_EQUALS);
         Assertions.assertEquals(EMAIL_LOGIN_NOT_EQUALS, thrown.getMessage());
     }
 }

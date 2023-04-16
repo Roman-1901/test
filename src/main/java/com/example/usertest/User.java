@@ -12,20 +12,16 @@ class User {
     private String email;
 
     public User(String login, String email) {
-            this.login = login;
-            this.email = email;
+        if (Objects.equals(email, login)) {
+            throw new RuntimeException("Логин и email совпадают");
         }
-        public void equalsLoginEmail() {
-            if (getEmail().equals(getLogin())) {
-                throw new RuntimeException("Логин и email совпадают");
-            }
+        if (!EmailValidator.getInstance().isValid(email)) {
+            throw new IllegalArgumentException("Введен некорректный email");
         }
-        public void checkEmail() {
-          boolean check = EmailValidator.getInstance().isValid(getEmail());
-          if (!check) {
-              throw new RuntimeException("Введен некорректный email");
-          }
-        }
+        this.login = login;
+        this.email = email;
     }
+
+}
 
 
